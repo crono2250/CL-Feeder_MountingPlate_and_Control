@@ -1,0 +1,40 @@
+0. [ Arduino ] Actuator firmware build and write
+    Build OpenPnP_CL-Feeder_mega2560.ino and write it to Arduino mega2560.
+
+1. [ OpenPnP2 ] Add a G-code driver
+    1.1 Add GCodeAsyncDriver and set the name "CL-Feeder_Driver" in the Name area of the Configuration tab.
+    1.2 Set "Line-Endings" to "LF" in the Communication method area of the Configuration tab.
+    1.3 In the SerialPort area of the Configuration tab, set "Port" to the COM port that was added when the driver was connected.
+    1.3 Set "Baud" to "115200" in the SerialPort area of the Configuration tab.
+
+2. [ OpenPnP2 ] Add Actuator
+    2.1 Add two "ReferenceActuator" and name them "CL-Feeder_PrePick", "CL-Feeder_PostPick
+    2.2 Specify "CL-Feeder_Driver" as the "Driver" of the added actuators.
+
+3. [ OpenPnP2 ] Add Actuator Settings
+    3.1 Select "CL-Feeder_Driver" added to "Drivers".
+    3.2 Select the "Gcode" tab, and select "CL-Feeder_PrePick" from the "Head Mountable" drop-down list.
+    3.3 Select "COMMAND_DOUBLE_COMMAND" from the "Setting" drop-down list.
+    3.4 Add "M600 N{IntegerValue} S1"
+
+    3.5 Select the "Gcode" tab, and select "CL-Feeder_PostPick" from the "Head Mountable" drop-down list.
+    3.6 Select "COMMAND_DOUBLE_COMMAND" from the "Setting" drop-down list.
+    3.7 Add "M600 N{IntegerValue} S0"
+
+4. [ OpenPnP2 ] Adding and configuring feeders
+    4.1 Set "CL-Feeder_PrePick" to "Feed" of "Actuator" in the "Actuators" area.
+    4.2 Set "CL-Feeder_PostPick" to "Post Pick" of "Actuator" in the "Actuators" area.
+    4.3 In the "Feeders" tab, add "ReferenceAutoFeeder".
+        Write the slot number in the "Actuator Value" in the "Actuators" area. The two numbers must have the same value.
+    4.4 Repeat section 4.3 for the number of slots.
+
+5. [ OpenPnP2 ] Check if it works
+    5.1 Click on "CL-Feeder_PrePick" in the "Actuators" tab under "Machine Controls
+    5.2 Enter a slot number (e.g. 0) in the "Set value" field and press the "Set" button.
+    5.3 Confirm that the Arduino port corresponding to slot 0 is set to "High" level. (The attached firmware changes the level of GPIO33.)
+
+    5.4 Click "CL-Feeder_PostPick" in the "Actuators" tab under "Machine Controls".
+    5.5 Enter a slot number (e.g. 0) in the "Set value" field and press the "Set" button.
+    5.6 Confirm that the Arduino port corresponding to slot 0 is set to "Low" level. (The attached firmware changes the level of GPIO33.)
+
+6. Enjoy!

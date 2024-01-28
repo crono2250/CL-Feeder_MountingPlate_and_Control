@@ -2,7 +2,7 @@
 // Pneumatic valve controller for OpenPnP
 //
 // Modified by cronos_sv
-// Date : 2024/Jan/09
+// Date : 2024/Jan/29
 //
 // target : Arduino Mega2560
 //---------------------------------
@@ -132,6 +132,23 @@ void Unpack_Data(void)
           Serial.print(MaxPinCount-1);
 #endif
         }
+      }
+      Serial.println(); //
+    } else
+    {
+      cmdValue = atoi(Head + 1); // 
+      if (cmdValue == 114)            // 114
+      {
+        Serial.print(F("ok "));
+        Serial.println();
+        Serial.print(F("NUMBER_OF_FEEDERS: 0_to_"));
+        Serial.print(MaxPinCount-1);
+      }
+       else if (cmdValue == 115)            // 115 mean Inform System Information to OpenPnP
+      {
+        Serial.print(F("FIRMWARE_NAME: OpenPnP_CL-Feeder_mega2560 ELECTRONICS: CL-Feeder Driver for mega2560 FIRMWARE_VERSION: 24.1.29 "));
+        Serial.println();
+        Serial.print(F("ok "));
       }
       Serial.println(); //
     }

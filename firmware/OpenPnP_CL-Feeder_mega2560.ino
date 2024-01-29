@@ -137,7 +137,7 @@ void Unpack_Data(void)
     } else
     {
       cmdValue = atoi(Head + 1); // 
-      if (cmdValue == 114)            // 115 mean Inform System Information to OpenPnP
+      if (cmdValue == 114)            // 114 is respond with the fixed string "X:0.0"
       {
         Serial.print(F("X:0.0 "));
         Serial.println();
